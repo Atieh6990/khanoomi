@@ -63,7 +63,6 @@ export default {
     },
     left () {
       if (this.select < this.cats.length - 1) {
-        // if (this.select < this.count) {
         this.select++
         if (this.select > this.indexToStartScroll) {
           this.next()
