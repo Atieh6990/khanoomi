@@ -3,7 +3,8 @@
     <div class="picParent">
       <img class="userPic" src="../../assets/images/header/userdefaul.png">
     </div>
-    <div class="userName">{{ userName }}</div>
+    <div class="userName">
+      {{ userName }}</div>
   </div>
 </template>
 
