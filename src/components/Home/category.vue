@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Flickity from 'vue-flickity'
 
+import Flickity from 'vue-flickity'
 export default {
   name: 'category',
   props: ['yPage', 'activeRout'],
@@ -83,6 +83,14 @@ export default {
     },
     up () {
       return false
+    },
+    down () {
+      return false
+    },
+    enter () {
+      return this.cats[this.select]
+    },
+    back () {
     }
   }
 }
