@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -58,6 +59,24 @@
         "env": {
           "jest": true
         }
+      },
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
       }
     ]
   },
@@ -67,9 +86,11 @@
     "not dead"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest",
+    "verbose": true,
+    "preset": "ts-jest/presets/js-with-ts",
     "transform": {
-      "^.+\\.vue$": "vue-jest"
+      "^[^.]+.vue$": "vue-jest",
+      "^.+\\.js$": "babel-jest"
     }
   },
   "gitHooks": {

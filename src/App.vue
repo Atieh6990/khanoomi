@@ -70,7 +70,8 @@ export default {
           break
         case 40:// Down
           if (this.loading === false && this.network === false) {
-            if (!this.$refs.Header.down()) {
+            console.log(this.$refs.Header.down())
+            if (this.$refs.Header.active) {
               this.$refs.Header.active = false
               this.$refs.routeView.activeRout = true
             } else {

@@ -3,8 +3,7 @@
     <div class="picParent">
       <img class="userPic" src="../../assets/images/header/userdefaul.png">
     </div>
-    <div class="userName">
-      {{ userName }}</div>
+    <div class="userName">{{ userName }}</div>
   </div>
 </template>
 
@@ -26,7 +25,6 @@ export default {
   width: 300px;
   left: 200px;
   top: 0px;
-  /*border: 1px solid red;*/
   overflow: hidden;
   display: flex;
   flex-direction: row;
