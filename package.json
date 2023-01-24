@@ -42,6 +42,7 @@
     "env": {
       "node": true
     },
+
     "extends": [
       "plugin:vue/vue3-essential",
       "@vue/standard"
@@ -80,6 +81,9 @@
       }
     ]
   },
+  "eslintIgnore": [
+    "iscroll.js"
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions",
