@@ -1,5 +1,5 @@
 <template>
-  <div class="headerParent">
+  <div class="headerParent" v-if="show">
     <headerMenu ref="headerMenu" :active="active"></headerMenu>
     <headerProfile></headerProfile>
   </div>
@@ -16,8 +16,15 @@ export default {
   },
   data () {
     return {
-      active: true
+      active: true,
+      show: true
     }
+  },
+  mounted () {
+    this.emitter.on('hide_header', () => {
+      this.show = false
+      this.active = false
+    })
   },
   methods: {
     left () {

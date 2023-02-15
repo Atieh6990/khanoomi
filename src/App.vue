@@ -70,7 +70,7 @@ export default {
           break
         case 40:// Down
           if (this.loading === false && this.network === false) {
-            console.log(this.$refs.Header.down())
+            // console.log(this.$refs.Header.active)
             if (this.$refs.Header.active) {
               this.$refs.Header.active = false
               this.$refs.routeView.activeRout = true
@@ -164,5 +164,7 @@ export default {
 body, input, select, label, div, span, p {
   font-family: "BYekan" !important;
 }
-
+textarea:focus, input:focus{
+  outline: none;
+}
 </style>
