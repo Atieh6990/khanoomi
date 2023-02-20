@@ -24,6 +24,9 @@ export default {
       activeRout: false
     }
   },
+  created () {
+    this.emitter.emit('show_header')
+  },
   methods: {
     right () {
       switch (this.yPage) {

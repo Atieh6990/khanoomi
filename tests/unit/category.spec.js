@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import category from '../../src/components/Home/category.vue'
+import category from '@/components/Home/category'
 
 describe('category.vue', () => {
   it('renders category completely', () => {

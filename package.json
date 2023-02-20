@@ -15,12 +15,16 @@
     "mitt": "^3.0.0",
     "vee-validate": "^4.7.4",
     "vue": "^3.0.0",
+    "vue-cookies": "^1.8.2",
     "vue-flickity": "^1.2.1",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@jest/create-cache-key-function": "^29.4.3",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",
@@ -30,7 +34,9 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^2.0.0-0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^29.4.3",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
@@ -93,18 +99,22 @@
     "not dead"
   ],
   "jest": {
+    "bail": 1,
     "verbose": true,
-    "preset": "ts-jest/presets/js-with-ts",
+    "collectCoverage": true,
+    "preset": "@vue/cli-plugin-unit-jest",
     "moduleFileExtensions": [
       "js",
-      "jsx",
       "json",
+      "jsx",
+      "ts",
+      "tsx",
+      "node",
       "vue"
     ],
     "transform": {
       "^.+\\.vue$": "vue-jest",
-      ".+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2)$": "jest-transform-stub",
-      "^.+\\.jsx?$": "babel-jest"
+      ".+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2)$": "jest-transform-stub"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!vue-flickity)"

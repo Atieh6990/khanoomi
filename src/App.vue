@@ -12,6 +12,8 @@
 <script>
 import Header from './components/Header/header'
 import router from './router'
+import { mapMutations } from 'vuex'
+import { ROAST_CONFIG } from '@/config'
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -37,10 +39,17 @@ export default {
   },
   created () {
     window.addEventListener('keydown', this.keyEvent)
+    if (this.$cookies.isKey(ROAST_CONFIG.cookies_key)) {
+      this.setAuthToken(this.$cookies.get(ROAST_CONFIG.cookies_key))
+    } else {
+      this.$router.push({ name: 'login' })
+    }
   },
   methods: {
+    ...mapMutations(['setAuthToken']),
     keyEvent (event) {
       const keyCode = event.keyCode
+      // console.log(keyCode)
       switch (keyCode) {
         case 38: // UP
           if (this.loading === false && this.network === false) {
@@ -164,7 +173,8 @@ export default {
 body, input, select, label, div, span, p {
   font-family: "BYekan" !important;
 }
-textarea:focus, input:focus{
+
+textarea:focus, input:focus {
   outline: none;
 }
 </style>
