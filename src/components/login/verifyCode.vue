@@ -7,7 +7,10 @@
         <input class="codeInp" v-model="key.value" :data-length="key.length" :data-index="i" :ref="'input_'+ i"
                type="number"
                maxlength="1"
-               @input="handleActivationInput($event)">
+               @input="handleActivationInput($event)"
+               @keydown="($event.keyCode == 40 || $event.keyCode == 38) ? ($event.preventDefault()):('')"
+               @keyup="($event.keyCode == 40 || $event.keyCode == 38) ? ($event.preventDefault()):('')"
+        >
       </div>
     </div>
     <div class="submitBtn" :class="[(ypos == 1 && activeRout ? 'hover':'')]">ورود</div>
@@ -23,7 +26,16 @@ export default {
     return {
       ypos: 0,
       xpos: 0,
+      activationCode: '',
       activationKeyFields: [
+        {
+          length: 1,
+          value: ''
+        },
+        {
+          length: 1,
+          value: ''
+        },
         {
           length: 1,
           value: ''
@@ -48,7 +60,11 @@ export default {
       if (this.ypos === 0) {
         this.$refs[`input_${this.xpos}`][0].focus()
       } else {
-        console.log(this.activationKeyFields)
+        for (const i in this.activationKeyFields) {
+          this.activationCode += this.activationKeyFields[i].value.toString()
+        }
+        this.$emit('login', this.activationCode)
+        // console.log(this.activationCode)
       }
     },
     handleActivationInput (e) {
@@ -69,7 +85,7 @@ export default {
       }
       // Shift focus to next input field if max length reached
       if (value.length >= maxlength) {
-        // console.log(typeof this.activationKeyFields[index + 1])
+        // console.log(this.activationKeyFields[index + 1])
         if (typeof this.activationKeyFields[index + 1] === 'undefined') {
           e.preventDefault()
           this.$refs[`input_${parseInt(index)}`][0].blur()
@@ -82,6 +98,26 @@ export default {
         // this.$refs['input_' + (index + 1)].focus()
         e.preventDefault()
       }
+    },
+    right () {
+      if (this.xpos < this.activationKeyFields.length - 1) {
+        this.$refs[`input_${parseInt(this.xpos)}`][0].blur()
+        this.xpos++
+        this.activationKeyFields[this.xpos].value = ''
+        this.$refs[`input_${parseInt(this.xpos)}`][0].focus()
+      }
+    },
+    left () {
+      if (this.xpos > 0) {
+        this.$refs[`input_${parseInt(this.xpos)}`][0].blur()
+        this.xpos--
+        this.activationKeyFields[this.xpos].value = ''
+        this.$refs[`input_${parseInt(this.xpos)}`][0].focus()
+      }
+    },
+    up () {
+      this.xpos = 0
+      this.ypos = 0
     }
   }
 }

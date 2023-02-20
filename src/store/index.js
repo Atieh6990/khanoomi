@@ -2,11 +2,17 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    authToken: ''
   },
   mutations: {
+    setAuthToken (state, payload) {
+      state.authToken = payload
+    }
   },
-  actions: {
+  getters: {
+    getAuthToken (state) {
+      return state.authToken
+    }
   },
-  modules: {
-  }
+  modules: {}
 })

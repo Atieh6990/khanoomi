@@ -25,6 +25,10 @@ export default {
       this.show = false
       this.active = false
     })
+    this.emitter.on('show_header', () => {
+      this.show = true
+      this.active = true
+    })
   },
   methods: {
     left () {
