@@ -1,6 +1,6 @@
 <template>
   <div class="pageParent">
-    <videoInfo></videoInfo>
+    <videoInfo :detailData="detailData"></videoInfo>
     <recommend :yPage="yPage" ref="recommend" :activeRout="activeRout"></recommend>
     <demo :yPage="yPage" ref="demo" :activeRout="activeRout"></demo>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 
-import videoInfo from '../components/detail/videoInfo'
+import videoInfo from '@/components/detail/videoInfo'
 import recommend from '@/components/detail/recommend'
 import demo from '@/components/detail/demo'
 
@@ -22,8 +22,11 @@ export default {
   data () {
     return {
       yPage: 1, // 0->recommend , 1->btn
-      activeRout: false
+      activeRout: true,
+      detailData: JSON.parse(this.$route.params.data)
     }
+  },
+  created () {
   },
   methods: {
     down () {
@@ -75,6 +78,9 @@ export default {
           this.$refs.demo.enter()
           break
       }
+    },
+    back () {
+      this.$router.go(-1)
     }
   }
 }

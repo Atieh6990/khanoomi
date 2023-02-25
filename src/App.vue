@@ -12,8 +12,9 @@
 <script>
 import Header from './components/Header/header'
 import router from './router'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import { ROAST_CONFIG } from '@/config'
+import axios from 'axios'
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -44,9 +45,30 @@ export default {
     } else {
       this.$router.push({ name: 'login' })
     }
+
+    axios.interceptors.request.use((config) => {
+      // console.log(this.getUserInfo().token)
+      config.headers.Authorization = 'Bearer ' + this.getAuthToken()
+      this.loading = true
+      return config
+    }, error => {
+      return Promise.reject(error)
+    })
+    axios.interceptors.response.use((response) => {
+      this.loading = false
+      return response
+    }, error => {
+      // console.log(error)
+      if (error.response.status === 401) {
+        this.loading = false
+        this.$router.push({ path: 'login' })
+      }
+      // return Promise.reject(error);
+    })
   },
   methods: {
     ...mapMutations(['setAuthToken']),
+    ...mapGetters(['getAuthToken']),
     keyEvent (event) {
       const keyCode = event.keyCode
       // console.log(keyCode)
@@ -102,7 +124,8 @@ export default {
           break
         case 8:// BackspaceKeyboard
           break
-        case 187:
+        case 187:// Return
+          this.$refs.routeview.back()
           break
         case 10182:// EXIT
           break

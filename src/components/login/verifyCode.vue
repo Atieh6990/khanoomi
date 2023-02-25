@@ -5,12 +5,14 @@
            v-for="(key, i) in activationKeyFields"
            :key="i">
         <input class="codeInp" v-model="key.value" :data-length="key.length" :data-index="i" :ref="'input_'+ i"
+               v-if="typeInpShow == 1"
                type="number"
                maxlength="1"
                @input="handleActivationInput($event)"
                @keydown="($event.keyCode == 40 || $event.keyCode == 38) ? ($event.preventDefault()):('')"
                @keyup="($event.keyCode == 40 || $event.keyCode == 38) ? ($event.preventDefault()):('')"
         >
+        <div class="codeInp" v-if="typeInpShow == 0">{{ key.value }}</div>
       </div>
     </div>
     <div class="submitBtn" :class="[(ypos == 1 && activeRout ? 'hover':'')]">ورود</div>
@@ -27,6 +29,7 @@ export default {
       ypos: 0,
       xpos: 0,
       activationCode: '',
+      typeInpShow: 0,
       activationKeyFields: [
         {
           length: 1,
@@ -58,7 +61,10 @@ export default {
   methods: {
     enter () {
       if (this.ypos === 0) {
-        this.$refs[`input_${this.xpos}`][0].focus()
+        this.typeInpShow = 1
+        setTimeout(() => {
+          this.$refs[`input_${this.xpos}`][0].focus()
+        }, 100)
       } else {
         for (const i in this.activationKeyFields) {
           this.activationCode += this.activationKeyFields[i].value.toString()
@@ -89,6 +95,7 @@ export default {
         if (typeof this.activationKeyFields[index + 1] === 'undefined') {
           e.preventDefault()
           this.$refs[`input_${parseInt(index)}`][0].blur()
+          this.typeInpShow = 0
           this.xpos = -1
           this.ypos = 1
           return
@@ -100,7 +107,7 @@ export default {
       }
     },
     right () {
-      if (this.xpos < this.activationKeyFields.length - 1) {
+      if (this.xpos < this.activationKeyFields.length - 1 && this.typeInpShow === 1) {
         this.$refs[`input_${parseInt(this.xpos)}`][0].blur()
         this.xpos++
         this.activationKeyFields[this.xpos].value = ''
@@ -108,7 +115,7 @@ export default {
       }
     },
     left () {
-      if (this.xpos > 0) {
+      if (this.xpos > 0 && this.typeInpShow === 1) {
         this.$refs[`input_${parseInt(this.xpos)}`][0].blur()
         this.xpos--
         this.activationKeyFields[this.xpos].value = ''
@@ -116,8 +123,10 @@ export default {
       }
     },
     up () {
-      this.xpos = 0
-      this.ypos = 0
+      if (this.ypos === 1) {
+        this.xpos = 0
+        this.ypos = 0
+      }
     }
   }
 }
@@ -152,6 +161,12 @@ export default {
   border-radius: 65px;
   border: 5px solid #FFFFFF30;
   margin-left: 22px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .codeInp {
@@ -165,6 +180,12 @@ export default {
   color: #FFFFFF;
   background-color: transparent;
   border: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   /*padding: 0px !important;*/
 }
 

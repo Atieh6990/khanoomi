@@ -1,7 +1,8 @@
 <template>
   <div class="mobileParent">
     <div class="mobileBox" :class="[(ypos == 0 && activeRout ? 'hover':'')]">
-      <input class="mobileInp" v-model="phone" ref="mobile">
+      <input class="mobileInp" v-model="phone" ref="mobile" v-if="typeInpShow == 1">
+      <div class="mobileInp" v-if="typeInpShow == 0">{{ phone }}</div>
     </div>
     <div class="submitBtn" :class="[(ypos == 1 && activeRout ? 'hover':'')]">ارسال</div>
   </div>
@@ -17,7 +18,8 @@ export default {
   props: ['activeRout'],
   data () {
     return {
-      ypos: 0
+      ypos: 0,
+      typeInpShow: 0
     }
   },
   created () {
@@ -47,6 +49,7 @@ export default {
   methods: {
     down () {
       if (this.ypos < 1) {
+        this.typeInpShow = 0
         this.$refs.mobile.blur()
         this.ypos++
       }
@@ -57,9 +60,12 @@ export default {
       }
     },
     enter () {
-      // console.log(this.ypos)
+      console.log(this.ypos)
       if (this.ypos === 0) {
-        this.$refs.mobile.focus()
+        this.typeInpShow = 1
+        setTimeout(() => {
+          this.$refs.mobile.focus()
+        }, 100)
         // this.$refs.email.$el.focus();
       } else {
         if (this.phoneIsValid) {
@@ -88,6 +94,12 @@ export default {
   border-radius: 65px;
   border: 5px solid #FFFFFF30;
   margin-top: 45px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .mobileInp {
@@ -101,6 +113,12 @@ export default {
   color: #FFFFFF;
   background-color: transparent;
   border: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .submitBtn {
