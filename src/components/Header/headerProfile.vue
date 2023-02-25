@@ -3,17 +3,18 @@
     <div class="picParent">
       <img class="userPic" src="../../assets/images/header/userdefaul.png">
     </div>
-    <div class="userName">{{ userName }}</div>
+    <div class="userName">
+      {{ (profileData.mobile) }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'headerProfile',
+  props: ['profileData'],
   data () {
-    return {
-      userName: 'عطیه السادات ظهیرالدینی'
-    }
+    return {}
   }
 }
 </script>
@@ -63,7 +64,7 @@ export default {
   align-content: center;
   color: #FFFFFF;
   font-size: 20px;
-  direction: rtl;
+  direction: ltr;
   padding: 0 15px 0 15px;
 }
 </style>

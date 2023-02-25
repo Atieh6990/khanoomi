@@ -1,10 +1,10 @@
 <template>
   <div class="infoParent">
-    <div class="title">آرایشگری</div>
-    <div class="shortDes">همه چیز درباره بوتاکس</div>
+    <div class="title">{{ detailData.title }}</div>
+    <div class="shortDes">{{ detailData.description }}</div>
     <div class="category">
       <img src="../../assets/images/header/cat.svg">
-      <span style="padding-right: 10px">دسته بندی : <span  class="catTitle">آرایشگری</span></span>
+      <span style="padding-right: 10px">دسته بندی : <span class="catTitle">{{ detailData.category.name }}</span></span>
     </div>
     <div class="duration">
       <div class="durationTitle">
@@ -18,7 +18,8 @@
 
 <script>
 export default {
-  name: 'videoInfo'
+  name: 'videoInfo',
+  props: ['detailData']
 }
 </script>
 
@@ -84,7 +85,8 @@ export default {
   align-items: center;
   align-content: center;
 }
-.duration{
+
+.duration {
   position: absolute;
   height: 52px;
   width: 312px;
@@ -104,7 +106,8 @@ export default {
   color: #FFFFFF;
   direction: rtl;
 }
-.durationTitle{
+
+.durationTitle {
   display: flex;
   flex-direction: row;
   /*justify-content: center;*/

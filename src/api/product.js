@@ -8,8 +8,8 @@ axios.interceptors.response.use(function (response) {
 })
 
 export default {
-  profile () {
-    const Url = ROAST_CONFIG.main_api_url + 'profile'
+  product () {
+    const Url = ROAST_CONFIG.main_api_url + 'product'
     return axios({
       method: 'GET',
       url: Url

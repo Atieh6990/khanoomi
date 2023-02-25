@@ -3,11 +3,11 @@
     <!--    <div class="blurBox corner_0"></div>-->
     <!--    <div class="blurBox corner_1"></div>-->
     <flickity class="flickity" ref="flickity" :options="flickityOptions">
-      <div class="itemContent" v-for="(item, index) in items" :key="index"
-           :class="[(select == item.id && yPage==1 && activeRout) ? 'hover':'']">
+      <div class="itemContent" v-for="(item, index) in slideShowData" :key="index"
+           :class="[(select == index && yPage==1 && activeRout) ? 'hover':'']">
         <img src="../../assets/images/home/testSlide.png" class="slideBack">
-        <div class="title">{{ item.title }}</div>
-        <div class="subTitle">{{ item.des }}</div>
+        <div class="title">{{ item.category.name }}</div>
+        <div class="subTitle">{{ item.description }}</div>
 
         <div class="playBlurBack">
           <div class="playBack">
@@ -20,7 +20,7 @@
         <div class="footer">
           <div class="timerBox">
             <img class="timeIcon" src="../../assets/images/home/timer.svg">
-            <div class="time">{{ item.duration }}</div>
+            <div class="time">{{ '02:38:56' }}</div>
           </div>
         </div>
       </div>
@@ -34,44 +34,44 @@ import '../../styles/global.css'
 
 export default {
   name: 'slideShow',
-  props: ['yPage', 'activeRout'],
+  props: ['yPage', 'activeRout', 'slideShowData'],
   components: {
     Flickity
   },
   data () {
     return {
-      items: [
-        {
-          id: 0,
-          title: 'آرایشگری',
-          des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
-          duration: '02:38:56'
-        },
-        {
-          id: 1,
-          title: 'آرایشگری',
-          des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
-          duration: '02:38:56'
-        },
-        {
-          id: 2,
-          title: 'آرایشگری',
-          des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
-          duration: '02:38:56'
-        },
-        {
-          id: 3,
-          title: 'آرایشگری',
-          des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
-          duration: '02:38:56'
-        },
-        {
-          id: 4,
-          title: 'آرایشگری',
-          des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
-          duration: '02:38:56'
-        }
-      ],
+      // items: [
+      //   {
+      //     id: 0,
+      //     title: 'آرایشگری',
+      //     des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
+      //     duration: '02:38:56'
+      //   },
+      //   {
+      //     id: 1,
+      //     title: 'آرایشگری',
+      //     des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
+      //     duration: '02:38:56'
+      //   },
+      //   {
+      //     id: 2,
+      //     title: 'آرایشگری',
+      //     des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
+      //     duration: '02:38:56'
+      //   },
+      //   {
+      //     id: 3,
+      //     title: 'آرایشگری',
+      //     des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
+      //     duration: '02:38:56'
+      //   },
+      //   {
+      //     id: 4,
+      //     title: 'آرایشگری',
+      //     des: 'آرایش مناسب برای مهمانی با چند تکنیک ساده',
+      //     duration: '02:38:56'
+      //   }
+      // ],
       flickityOptions: {
         pageDots: true,
         contain: true,
@@ -97,12 +97,10 @@ export default {
       this.$refs.flickity.previous()
     },
     left () {
-      if (this.select < this.items.length - 1) {
+      // console.log(this.select, this.slideShowData.length)
+      if (this.select < this.slideShowData.length - 1) {
         this.next()
         this.select++
-        // if (this.select > this.indexToStartScroll) {
-
-        // }
         return true
       } else {
         return false
@@ -124,7 +122,8 @@ export default {
       return false
     },
     enter () {
-      return this.items[this.select]
+      // console.log('enter', this.slideShowData[this.select].description)
+      return this.slideShowData[this.select]
     },
     back () {
     }

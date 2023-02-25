@@ -41,6 +41,7 @@ export default {
   },
   created () {
     this.emitter.emit('hide_header')
+    this.emitter.emit('deactive_header')
     this.emitter.on('show_err', err => {
       this.validationError = err
     })

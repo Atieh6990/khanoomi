@@ -1,8 +1,8 @@
 <template>
   <div class="catParent">
     <flickity class="flickity" ref="flickity" :options="flickityOptions">
-      <div class="itemContent" v-for="(item) in cats" :key="item.id"
-           :class="[(select == item.id && yPage==0 && activeRout) ? 'hover':'']">
+      <div class="itemContent" v-for="(item , index) in catData" :key="item.id"
+           :class="[(select == index && yPage==0 && activeRout) ? 'hover':'']">
         {{ item.name }}
       </div>
     </flickity>
@@ -12,9 +12,10 @@
 <script>
 
 import Flickity from 'vue-flickity'
+
 export default {
   name: 'category',
-  props: ['yPage', 'activeRout'],
+  props: ['yPage', 'activeRout', 'catData'],
   components: {
     Flickity
   },
@@ -33,25 +34,7 @@ export default {
         prevNextButtons: false,
         cellAlign: 'right',
         rightToLeft: true
-      },
-      cats: [
-        {
-          id: 0,
-          name: 'آشپزی'
-        },
-        {
-          id: 1,
-          name: 'آرایشگری'
-        },
-        {
-          id: 2,
-          name: 'خودرو'
-        },
-        {
-          id: 3,
-          name: 'مقاله'
-        }
-      ]
+      }
     }
   },
   methods: {
@@ -62,7 +45,7 @@ export default {
       this.$refs.flickity.previous()
     },
     left () {
-      if (this.select < this.cats.length - 1) {
+      if (this.select < this.catData.length - 1) {
         this.select++
         if (this.select > this.indexToStartScroll) {
           this.next()
@@ -88,7 +71,7 @@ export default {
       return false
     },
     enter () {
-      return this.cats[this.select]
+      return this.catData[this.select]
     },
     back () {
     }

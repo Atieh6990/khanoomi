@@ -1,12 +1,13 @@
 <template>
   <div class="headerParent" v-if="show">
     <headerMenu ref="headerMenu" :active="active"></headerMenu>
-    <headerProfile></headerProfile>
+    <headerProfile :profileData="profileData"></headerProfile>
   </div>
 </template>
 <script>
 import headerMenu from './headerMenu'
 import headerProfile from '@/components/Header/headerProfile'
+import api from '@/api/profile'
 
 export default {
   name: 'header',
@@ -16,18 +17,32 @@ export default {
   },
   data () {
     return {
-      active: true,
-      show: true
+      active: false,
+      show: true,
+      profileData: ''
     }
   },
+  created () {
+  },
   mounted () {
-    this.emitter.on('hide_header', () => {
+    this.emitter.on('hide_header', () => { // namayeshe NAdadane header
       this.show = false
+    })
+    this.emitter.on('show_header', () => { // namayesh dadane header
+      this.show = true
+    })
+    this.emitter.on('active_header', () => { // hover begire
+      this.active = true
+    })
+    this.emitter.on('deactive_header', () => { // hover nagire
       this.active = false
     })
-    this.emitter.on('show_header', () => {
-      this.show = true
-      this.active = true
+    this.emitter.on('get_profile', () => { // hover nagire
+      api.profile().then(data => {
+        if (data.success) {
+          this.profileData = data.data
+        }
+      })
     })
   },
   methods: {

@@ -1,7 +1,9 @@
 <template>
   <div class="pageParent">
-    <category :yPage="yPage" ref="category" :activeRout="activeRout"></category>
-    <slideShow :yPage="yPage" ref="slideShow" :activeRout="activeRout"></slideShow>
+    <category :yPage="yPage" ref="category" :activeRout="activeRout" :catData="catData"
+              v-if="catData.length>0"></category>
+    <slideShow :yPage="yPage" ref="slideShow" :activeRout="activeRout" :slideShowData="slideShowData"
+               v-if="slideShowData.length>0"></slideShow>
     <videos :yPage="yPage" ref="videos" :activeRout="activeRout"></videos>
   </div>
 </template>
@@ -10,6 +12,8 @@
 import category from '@/components/Home/category'
 import slideShow from '@/components/Home/slideShow'
 import videos from '@/components/Home/videos'
+import catApi from '@/api/catApi'
+import productApi from '@/api/product'
 
 export default {
   name: 'Home',
@@ -21,11 +25,25 @@ export default {
   data () {
     return {
       yPage: 0, // 0->cat , 1->slideShow , 2->videos
-      activeRout: false
+      activeRout: true,
+      catData: '',
+      slideShowData: ''
     }
   },
   created () {
     this.emitter.emit('show_header')
+    this.emitter.emit('get_profile')
+    catApi.category().then(data => {
+      if (data.success) {
+        this.catData = data.data
+      }
+    })
+
+    productApi.product().then(data => {
+      if (data.success) {
+        this.slideShowData = data.data
+      }
+    })
   },
   methods: {
     right () {
@@ -86,8 +104,14 @@ export default {
         case 0:
           this.$refs.category.enter()
           break
-        case 1:
-          this.$refs.slideShow.enter()
+        case 1: {
+          const param = this.$refs.slideShow.enter()
+          // console.log('param', param)
+          this.$router.push({
+            name: 'detail',
+            params: { data: JSON.stringify(param) }
+          })
+        }
           break
         case 2:
           this.$refs.videos.enter()
